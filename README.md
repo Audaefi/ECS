@@ -25,7 +25,7 @@
 
 ##### 2. 데이터 처리 & 분석
 
-- EMR(Spark, Hadoop, Hive, etc.) 환경에서의 데이터 전처리 및 분석
+- EMR(Spark, Hadoop, Hive, etc.)을 통한 데이터 전처리 및 분석
     - 데이터 분석&시각화를 위한 데이터 전처리 과정
         - 결측값 수정 및 Irrelevant 데이터 제거
     - Python 또는 SQL, Scala를 이용한 데이터 분석 과정
