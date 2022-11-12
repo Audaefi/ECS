@@ -1,7 +1,5 @@
 # ECS (E-Commerce Scraper)
 
-**프로젝트명** : ECS (E-Commerce Scraper)
-
 **프로젝트 분야** : Cloud / Data Engineering
 
 **프로젝트 기간** : 2022.02 ~ Present (지속 개발 & 운용 중)
