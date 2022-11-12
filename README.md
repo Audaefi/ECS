@@ -13,7 +13,7 @@
 - 데이터 처리 & 분석 : `RDS` `EMR` `Redshift` `ElasticSearch`
 - 데이터 시각화 : `Tableau`
 - 배포/관리 : `EKS`
-------
+
 ## Operation Process
 #### 1. 데이터 수집 & 저장
 - Python, Scrapy-Playwright 기반 정적/동적 Web Scraper
