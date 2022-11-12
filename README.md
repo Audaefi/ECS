@@ -9,14 +9,14 @@
 
 **사용 기술** : 
 
-- 데이터 수집 & 저장 : `Python` `Scrapy-Playwright` `EC2` `S3`
+- 데이터 수집 & 저장 : `Python` `Scrapy` `Playwright` `EC2` `S3`
 - 데이터 처리 & 분석 : `RDS` `EMR` `Redshift` `ElasticSearch`
 - 데이터 시각화 : `Tableau`
 - 배포/관리 : `EKS`
 
 ## Operation Process
 #### 1. 데이터 수집 & 저장
-- Python, Scrapy-Playwright 기반 정적/동적 Web Scraper
+- Python, Scrapy, Playwright 기반 Web Scraper
   - 프록시를 통한 IP Blocking 방지, CAPCHA 우회
   - 자동 로그인 기능
   - Include/Exclude Keyword 기능
