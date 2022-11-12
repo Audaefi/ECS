@@ -1,6 +1,8 @@
 # ECS (E-Commerce Scraper)
 
 ## 프로젝트 상세
+**프로젝트명** : ECS (E-Commerce Scraper)
+
 **프로젝트 분야** : Cloud / Data Engineering
 
 **프로젝트 기간** : 2022.02 ~ 2022.03 / Present (지속 개발 & 운용 중)
@@ -22,7 +24,7 @@
   - Include/Exclude Keyword 기능
 - 수집 데이터는 S3 -> RDS로 자동 업로드
 
-##### 2. 데이터 처리 & 분석
+#### 2. 데이터 처리 & 분석
 - EMR(Spark, Hadoop, Hive, etc.)을 통한 데이터 전처리 및 분석
     - 데이터 분석&시각화를 위한 데이터 전처리 과정
         - 결측값 수정 및 Irrelevant 데이터 제거
