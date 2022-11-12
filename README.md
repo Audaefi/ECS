@@ -18,18 +18,21 @@
 
 ## Operation Process
 #### 1. 데이터 수집 & 저장
-- Python, Scrapy, Playwright 기반 Web Scraper
-  - 프록시를 통한 IP Blocking 방지, CAPCHA 우회
-  - 자동 로그인 기능
-  - Include/Exclude Keyword 기능
-- 수집 데이터는 S3 -> RDS로 자동 업로드
+- Python, Scrapy, Playwright 기반의 강력한 Market Scraper
+  - 총 30개의 Market Coverage 지원
+  - Proxy를 통한 수집 지원
+  - n개의 Market을 동시 수집 가능한, Parallel-processing mode 지원
+  - Market 별 자동 로그인 기능
+  - Include / Exclude Keyword 지정 기능
+  - 수집 데이터를 지정한 S3 Bucket으로 자동 업로드
+- RDS Crawler를 이용, S3 Bucket에서 지정한 RDS로 자동 업로드
 
 #### 2. 데이터 처리 & 분석
 - EMR(Spark, Hadoop, Hive, etc.)을 통한 데이터 전처리 및 분석
     - a. 데이터 분석&시각화를 위한 데이터 전처리 과정
-        - 결측값 수정 및 Irrelevant 데이터 제거
+        - 결측값 및 Irrelevant 데이터 제거
     - b. Python 또는 SQL, Scala를 이용한 데이터 분석 과정
-        - “어떤 Marketplace에서 어떤 Product가 가장 많이 나오는가?”
+        - “어떤 Market에서 어떤 Product가 가장 많이 나오는가?”
         - “어떤 Seller가 가장 많은 유통 비중을 차지하는가?”
 
 #### 3. 데이터 시각화
