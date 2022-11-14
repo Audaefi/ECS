@@ -25,9 +25,11 @@ class ShopeeIdSpider(scrapy.Spider):
                     callback=self.parse,
                     meta={"playwright": True,
                           "playwright_page_methods": [
+                              PageMethod("wait_for_timeout", 2000),
                               PageMethod('evaluate', "window.scrollBy(0, document.body.scrollHeight)"),
-                              PageMethod("wait_for_selector", '[data-sqe="item"]'),
-                          ],
+                              PageMethod("wait_for_timeout", 2000),
+                              PageMethod("wait_for_selector", '[data-sqe="item"]')
+                          ]
                           },
                 )
 
@@ -40,16 +42,15 @@ class ShopeeIdSpider(scrapy.Spider):
             yield scrapy.Request(product_url,
                                  callback=self.parse_product,
                                  meta={"playwright": True, "playwright_page_methods": [
-                                     #PageMethod("wait_for_selector", '_3CXjs-._3DKwBj'),
-                                     PageMethod("wait_for_timeout", 2000)
-                                     #PageMethod("wait_for_selector", 'div._2rQP1z'),
-                                     #PageMethod("wait_for_selector", 'div._2Shl1j'),
-                                     #PageMethod("wait_for_selector", 'div._3LoNDM')
+                                     PageMethod("wait_for_timeout", 2000),
+                                     PageMethod("wait_for_selector", 'div._2rQP1z'),
+                                     PageMethod("wait_for_selector", 'div._2Shl1j'),
+                                     PageMethod("wait_for_selector", 'div._3LoNDM')
                                  ],
                                        })
 
     def parse_product(self, response):
-        product_src = response.css('div._3iW6K2').get()
+        product_src = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$\-@\.&+:/?=]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', response.css('div._3iW6K2').get())
         product_title = response.css('div._2rQP1z > span ::Text').get()
         product_price = response.css('div._2Shl1j ::Text').get()
         product_seller = response.css('div._3LoNDM ::Text').get()
@@ -59,8 +60,8 @@ class ShopeeIdSpider(scrapy.Spider):
             "detected_time": datetime.today().strftime("%Y-%m-%d %H:%M:%S"),
             "product_href": response.request.url,
 
-            "product_src": product_src, #re.findall('\(([^)]+)', product_src)
+            "product_src": product_src,
             'product_title': product_title,
-            'product_price': product_price,
+            'product_price': product_price.replace("Rp", ""),
             'product_seller': product_seller
         }

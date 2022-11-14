@@ -23,8 +23,10 @@ class LazadaIdSpider(scrapy.Spider):
                     callback=self.parse,
                     meta={"playwright": True,
                           "playwright_page_methods": [
+                              PageMethod("wait_for_timeout", 2000),
                               PageMethod('evaluate', "window.scrollBy(0, document.body.scrollHeight)"),
-                              PageMethod("wait_for_selector", '[data-tracking="product-card"]'),
+                              PageMethod("wait_for_timeout", 2000),
+                              #PageMethod("wait_for_selector", '[data-tracking="product-card"]'),
                           ],
                           },
                 )

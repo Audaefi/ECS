@@ -12,16 +12,17 @@ BOT_NAME = 'ECS'
 SPIDER_MODULES = ['ECS.spiders']
 NEWSPIDER_MODULE = 'ECS.spiders'
 
-#PLAYWRIGHT_LAUNCH_OPTIONS = {'headless': False}
+PLAYWRIGHT_LAUNCH_OPTIONS = {'headless': False}
 
 ROBOTSTXT_OBEY = False
 AUTOTHROTTLE_ENABLED = True
-AUTOTHROTTLE_START_DELAY = 0.8
-AUTOTHROTTLE_MAX_DELAY = 2.5
+AUTOTHROTTLE_START_DELAY = 1.1
+AUTOTHROTTLE_MAX_DELAY = 2.7
 #DOWNLOAD_DELAY = 1
 
 SCRAPEOPS_API_KEY = 'e55b354a-4195-41c7-bb2c-d93bf7fb229d'
 #SCRAPEOPS_FAKE_USER_AGENT_ENDPOINT = True
+#SCRAPEOPS_PROXY_ENABLED = True
 
 '''
 FEEDS = {"s3://rdata-storage/%(name)s/%(name)s_%(time)s.csv": {"format": "csv"}}
@@ -38,6 +39,7 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
     'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
     'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
+    #'scrapeops_scrapy_proxy_sdk.scrapeops_scrapy_proxy_sdk.ScrapeOpsScrapyProxySdk': 725,
     #'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 400,
     #'scrapy_fake_useragent.middleware.RetryUserAgentMiddleware': 401,
 }
@@ -52,3 +54,4 @@ FAKEUSERAGENT_PROVIDERS = [
 
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 
+#CONCURRENT_REQUESTS = 1
