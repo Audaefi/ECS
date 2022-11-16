@@ -1,3 +1,4 @@
+# C
 import scrapy
 from datetime import datetime
 from scrapy_playwright.page import PageMethod
@@ -17,34 +18,35 @@ class A11stSpider(scrapy.Spider):
 
         for keyword in keyword_list:
             for page in range(1, pages + 1):
-                search_url = f'https://search.11st.co.kr/Search.tmall?kwd={keyword}#viewType%%L%%list%%3$$sortCd%%N%%%EC%B5%9C%EC%8B%A0%EC%88%9C5$$pageNum%%{page}%%'
-                yield scrapy.Request(
-                    url=search_url,
-                    callback=self.parse,
-                    meta={"playwright": True,
-                          "playwright_page_methods": [
-                              PageMethod('evaluate', "window.scrollBy(0, document.body.scrollHeight)"),
-                              PageMethod("wait_for_selector", '[class="c_card c_card_list"]'),
-                          ],
-                          },
-                )
+                search_url = f'https://search.11st.co.kr/Search.tmall?kwd={keyword}#pageNum%%{page}%%page%%10$$viewType%%I%%gallery%%13$$sortCd%%SPS%%11%EB%B2%88%EA%B0%80%20%EC%9D%B8%EA%B8%B0%EC%88%9C%%9'
+                yield scrapy.Request(search_url, callback=self.parse_page, meta=dict(
+                    playwright=True,
+                    playwright_include_page=True,
+                    playwright_page_methods=[
+                        PageMethod("evaluate", "window.scrollBy(0, document.body.scrollHeight)"),
+                        PageMethod("evaluate", "window.scrollBy(document.body.scrollHeight, 0)"),
+                        PageMethod("wait_for_timeout", 2000),
 
-    def parse(self, response):
-        products_selector = response.css('[class="c_card c_card_list"]')
+                    ],
+                    errback=self.errback,
+                ))
+
+    def parse_page(self, response):
+        products_selector = response.css('[data-log-actionid-label="product"]')
 
         for product in products_selector:
-            product_url = product.css('div.c_prd_thumb > a ::attr(href)').get()
+            product_url = product.css('::attr(href)').get()
             yield scrapy.Request(product_url,
                                  callback=self.parse_product,
                                  meta={"playwright": False,
-                                      "playwright_page_methods": [
-                                          PageMethod(
-                                              "wait_for_selector",
-                                              '[class="box__viewer-container"]'),
-                                      ],
-                                      })
+                                       "playwright_page_methods": [
+                                           PageMethod("wait_for_timeout", 2000),
+                                       ],
+                                       "product_url": product_url
+                                       })
 
     def parse_product(self, response):
+        page_url = response.meta["product_url"]
         product_src = response.css('div.img_full > img ::attr(src)').get()
         product_title = response.xpath('.//title/text()').get()
         product_price = response.css('span.value ::Text').get()
@@ -53,7 +55,7 @@ class A11stSpider(scrapy.Spider):
         yield {
             "marketplace": self.name,
             "detected_time": datetime.today().strftime("%Y-%m-%d %H:%M:%S"),
-            "product_href": response.request.url,
+            "product_href": page_url,
 
             "product_src": product_src,
             'product_title': product_title.strip(),
@@ -61,3 +63,6 @@ class A11stSpider(scrapy.Spider):
             'product_seller': product_seller
         }
 
+    async def errback(self, failure):
+        page = failure.request.meta["playwright_page"]
+        await page.close()

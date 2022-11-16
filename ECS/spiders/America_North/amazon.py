@@ -1,5 +1,5 @@
+# C , 프록시 사용 시 차단 문제 있음.
 import scrapy
-import re
 from datetime import datetime
 from urllib.parse import urljoin
 from scrapy_playwright.page import PageMethod
@@ -18,7 +18,7 @@ class AmazonSpider(scrapy.Spider):
 
         for keyword in keyword_list:
             for page in range(1, pages + 1):
-                search_url = f"https://www.amazon.com/s?k=tory+burch&page={page}&crid=3T91VH322SU92&qid=1668430936&sprefix={keyword}%2Caps%2C295"
+                search_url = f"https://www.amazon.com/s?k={keyword}&page={page}"
                 yield scrapy.Request(search_url, callback=self.parse_page, meta=dict(
                     playwright=True,
                     playwright_include_page=True,
@@ -39,37 +39,38 @@ class AmazonSpider(scrapy.Spider):
 
         for product in products_selector:
             relative_url = product.css('::attr(href)').get()
-            product_url = urljoin('https://www.amazon.com/', relative_url)
+            product_url = urljoin('https://www.amazon.com', relative_url)
             yield scrapy.Request(product_url,
                                  callback=self.parse_product,
                                  meta={"playwright": True,
                                        "playwright_include_page": True,
                                        "playwright_page_methods": [
-                                           PageMethod("wait_for_timeout", 2000),
-                                           # PageMethod("wait_for_selector", 'div._2rQP1z'),
-                                           # PageMethod("wait_for_selector", 'div._2Shl1j'),
-                                           # PageMethod("wait_for_selector", 'div._3LoNDM')
+                                           #PageMethod("wait_for_timeout", 2000),
+                                           PageMethod("wait_for_selector", '[class="imgTagWrapper"]'),
                                        ],
+                                       "product_url": product_url
                                        })
 
     async def parse_product(self, response):
         page = response.meta["playwright_page"]
         await page.close()
 
-        product_src = re.findall(r"colorImages':.*'initial':\s*(\[.+?\])},\n", response.text)[0]
-        product_title = response.css('#productTitle ::Text').get()
-        product_price = response.css('.a-price span[aria-hidden="true"] ::text').get("")
+        page_url = response.meta["product_url"]
+        product_src = response.css('[class="imgTagWrapper"] ::attr(src)').get()
+        #re.findall(r"colorImages':.*'initial':\s*(\[.+?\])},\n", response.text)[0]
+        product_title = response.css('[class="a-size-large product-title-word-break"] ::Text').get().strip()
+        product_price = response.css('.a-price-whole ::text').get("")
         if not product_price:
-            product_price = response.css('.a-price .a-offscreen ::text').get("")
+            product_price = response.css('.a-price span[aria-hidden="true"] ::text').get("")
         product_seller = None
 
         yield {
             "marketplace": self.name,
             "detected_time": datetime.today().strftime("%Y-%m-%d %H:%M:%S"),
-            "product_href": response.request.url,
+            "product_href": page_url,
             "product_src": product_src,
             'product_title': product_title,
-            'product_price': product_price.replace("Rp", ""),
+            'product_price': product_price.replace("$", ""),
             'product_seller': product_seller
         }
 
