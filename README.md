@@ -25,7 +25,7 @@
   - Market 별 자동 로그인 기능
   - Include / Exclude Keyword 지정 기능
   - 수집 데이터를 지정한 S3 Bucket으로 자동 업로드
-- RDS Crawler를 이용, S3 Bucket에서 지정한 RDS로 자동 업로드
+- Glue Crawler를 이용, S3 Bucket에서 지정한 RDS로 자동 업로드
 
 #### 2. 데이터 처리 & 분석
 - EMR(Spark, Hadoop, Hive, etc.)을 통한 데이터 전처리 및 분석
