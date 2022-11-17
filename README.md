@@ -12,9 +12,12 @@
 **사용 기술** : 
 
 - 데이터 수집 & 저장 : `Python` `Scrapy` `Playwright` `EC2` `S3`
-- 데이터 처리 & 분석 : `RDS` `EMR` `Redshift` `ElasticSearch`
+- 데이터 처리 & 분석 : `Redshift` `EMR`
 - 데이터 시각화 : `Tableau`
 - 배포/관리 : `EKS`
+
+## Architecture
+
 
 ## Operation Process
 #### 1. 데이터 수집 & 저장
