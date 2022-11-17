@@ -17,7 +17,7 @@
 - 배포/관리 : `EKS`
 
 ## Architecture
-
+<img width="1102" alt="Screenshot 2022-11-17 at 12 14 49 PM" src="https://user-images.githubusercontent.com/24248797/202346713-f9b8b823-8aa0-4bd7-8c5b-ee233e8cba11.png">
 
 ## Operation Process
 #### 1. 데이터 수집 & 저장
