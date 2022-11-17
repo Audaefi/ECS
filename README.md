@@ -1,7 +1,7 @@
 # ECS (E-Commerce Scraper)
 
 ## Project Detail
-**프로젝트명** : ECS (E-Commerce Scraper)
+**프로젝트명** : ECS : Data Pipeline
 
 **프로젝트 분야** : Cloud / Data Engineering
 
@@ -22,7 +22,7 @@
   - 총 30개의 Market Coverage 지원
   - Proxy를 통한 수집 지원
   - n개의 Market을 동시 수집 가능한, Parallel-Processing Mode 지원
-  - Market 별 자동 로그인 기능 (각 마켓 별 계정 생성 및 개발 중)
+  - Market 별 자동 로그인 기능 (각 마켓 별 계정 생성 및 개발 중 / 22.11 ~ )
   - Include / Exclude Keyword 지정 기능
   - 수집 데이터를 지정한 S3 Bucket으로 자동 업로드
 - Glue Crawler를 이용, S3 Bucket에서 지정한 RDS로 자동 업로드
