@@ -1,6 +1,6 @@
 # ECS (E-Commerce Scraper)
 
-## Project Detail
+## Project Details
 **프로젝트명** : ECS : Data Pipeline
 
 **프로젝트 분야** : Cloud / Data Engineering
