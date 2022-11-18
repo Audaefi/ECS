@@ -5,8 +5,8 @@ from urllib.parse import urljoin
 from scrapy_playwright.page import PageMethod
 
 
-class AlibabaSpider(scrapy.Spider):
-    name = 'alibaba'
+class FlipkartSpider(scrapy.Spider):
+    name = 'flipkart'
 
     HEADERS = {
         "User-Agent": 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.83 Safari/537.36',
@@ -28,19 +28,20 @@ class AlibabaSpider(scrapy.Spider):
     }
 
     def start_requests(self):
-        keywords = list(map(str, input('Search Keywords : ').split(',')))
-        extract_pages = int(input("Max Crawl Pages : "))
+        keyword_list = list(map(str, input('Search Keywords : ').split(',')))
+        pages = int(input("Max Crawl Pages : "))
 
-        for keyword in keywords:
-            for page in range(1, extract_pages + 1):
-                search_url = f"https://www.alibaba.com/trade/search?fsb=y&IndexArea=product_en&CatId=&tab=&SearchText={keyword}&viewtype=L&&page={page}"
+        for keyword in keyword_list:
+            for page in range(1, pages + 1):
+                search_url = f"https://www.flipkart.com/search?q={keyword}&otracker=search&otracker1=search&marketplace=FLIPKART&as-show=on&as=off&page={page}"
                 yield scrapy.Request(search_url, callback=self.parse_page, meta=dict(
                     playwright=True,
                     playwright_include_page=True,
                     playwright_page_methods=[
                         PageMethod("evaluate", "window.scrollBy(0, document.body.scrollHeight)"),
-                        PageMethod("evaluate", "window.scrollBy(document.body.scrollHeight, 0)"),
+                        #PageMethod("evaluate", "window.scrollBy(document.body.scrollHeight, 0)"),
                         PageMethod("wait_for_timeout", 2000),
+
                     ],
                     errback=self.errback,
                 ))
@@ -49,24 +50,27 @@ class AlibabaSpider(scrapy.Spider):
         page = response.meta["playwright_page"]
         await page.close()
 
-        products_selector = response.css('[class="list-no-v2-left__img-container"]')
+        products_selector = response.css('[class="IRpwTa _2-ICcC"]')
 
         for product in products_selector:
-            relative_url = product.css('a.list-no-v2-left__img-container::attr(href)').get()
-            product_url = urljoin('https:', relative_url)  # .split("?")[0]
-            yield scrapy.Request(product_url, callback=self.parse_product, meta={"playwright": False, "product_url": product_url})
+            relative_url = product.css('::attr(href)').get()
+            product_url = urljoin('https://www.flipkart.com', relative_url)
+            yield scrapy.Request(product_url,
+                                 callback=self.parse_product,
+                                 meta={"playwright": True, "playwright_include_page": True, "playwright_page_methods": [
+                                     PageMethod("wait_for_timeout", 1000)
+                                 ], "product_url": product_url})
 
-    def parse_product(self, response):
+    async def parse_product(self, response):
+        page = response.meta["playwright_page"]
+        await page.close()
+
         page_url = response.meta["product_url"]
-        product_src = response.css('img.main-img ::attr(src)').get()
-        product_title = response.css('div.product-title > h1 ::Text').get()
-
-        if response.css('span.promotion'): product_price = response.css('span.promotion ::Text').get()
-        elif response.css('div.product-price'): product_price = response.css('div.product-price > div > strong ::Text').get()
-        elif response.css('div.price-range > span.price'): product_price = response.css('div.price-range > span.price ::Text').get()
-
-        if response.css('div.company-item'): product_seller = response.css('div.company-item ::Text').get()
-        if response.css('a.company-name.company-name-lite-vb'): product_seller = response.css('a.company-name.company-name-lite-vb ::Text').get()
+        product_src = response.css('[class="_2r_T1I _396QI4"] ::attr(src)').get()
+        # re.findall(r"colorImages':.*'initial':\s*(\[.+?\])},\n", response.text)[0]
+        product_title = response.css('[class="B_NuCI"] ::Text').get()
+        product_price = response.css('[class="_30jeq3 _16Jk6d"] ::text').get("")
+        product_seller = response.css('[id="sellerName"] ::text').get("")
 
         yield {
             "marketplace": self.name,
@@ -74,7 +78,7 @@ class AlibabaSpider(scrapy.Spider):
             "product_href": page_url,
             "product_src": product_src,
             'product_title': product_title,
-            'product_price': product_price.replace("$", ""),
+            'product_price': product_price.replace("₹", ""),
             'product_seller': product_seller
         }
 

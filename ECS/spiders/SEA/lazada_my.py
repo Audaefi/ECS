@@ -3,7 +3,7 @@ from datetime import datetime
 from scrapy_playwright.page import PageMethod
 
 
-class LazadaSpider(scrapy.Spider):
+class LazadaMySpider(scrapy.Spider):
     name = 'lazada_my'
 
     custom_settings = {

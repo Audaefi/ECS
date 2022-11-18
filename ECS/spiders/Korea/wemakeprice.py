@@ -73,7 +73,6 @@ class WemakepriceSpider(scrapy.Spider):
             "marketplace": self.name,
             "detected_time": datetime.today().strftime("%Y-%m-%d %H:%M:%S"),
             "product_href": page_url,
-
             "product_src": product_src,
             'product_title': product_title,
             'product_price': product_price,
