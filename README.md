@@ -1,7 +1,7 @@
 # ECS (E-Commerce Scraper)
 
-## Project Detail
-**프로젝트명** : ECS : Data Pipeline
+## Project Details
+**프로젝트명** : ECS - Data Pipeline
 
 **프로젝트 분야** : Cloud / Data Engineering
 
@@ -12,9 +12,11 @@
 **사용 기술** : 
 
 - 데이터 수집 & 저장 : `Python` `Scrapy` `Playwright` `EC2` `S3`
-- 데이터 처리 & 분석 : `RDS` `EMR` `Redshift` `ElasticSearch`
+- 데이터 처리 & 분석 : `Redshift` `EMR`
 - 데이터 시각화 : `Tableau`
-- 배포/관리 : `EKS`
+
+## Architecture
+<img width="1098" alt="Screenshot 2022-11-17 at 8 20 15 PM" src="https://user-images.githubusercontent.com/24248797/202434659-62384ae2-5291-4c14-b1ce-3469a1d93139.png">
 
 ## Operation Process
 #### 1. 데이터 수집 & 저장
