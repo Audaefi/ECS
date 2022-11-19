@@ -16,10 +16,10 @@ class SmartstoreSpider(scrapy.Spider):
 
     def start_requests(self):
         args = get_arguments()
-        query_data = {marketplace: page for marketplace, page in zip(args.target, args.page)}
+        req_page = {marketplace: page for marketplace, page in zip(args.target, args.page)}
 
         for keyword in args.keyword:
-            for page in range(1, query_data['smartstore'] + 1):
+            for page in range(1, req_page['smartstore'] + 1):
                 search_url = f"https://search.shopping.naver.com/search/all?exrental=true&exused=true&frm=NVSHCHK&npayType=2&origQuery={keyword}&pagingIndex={page}&pagingSize=40&productSet=checkout&query={keyword}&sort=date&timestamp=&viewType=list"
                 yield scrapy.Request(search_url, callback=self.parse_page, meta={
                     "playwright": True,
@@ -37,6 +37,7 @@ class SmartstoreSpider(scrapy.Spider):
         page = response.meta["playwright_page"]
         # await page.screenshot(path="example.png", full_page=True)
         await page.close()
+
         pd_keyword = response.meta["pd_keyword"]
         products_selector = response.css('[data-testid="SEARCH_PRODUCT"]')
 
@@ -50,15 +51,13 @@ class SmartstoreSpider(scrapy.Spider):
 
     async def parse_product(self, response):
         page = response.meta["playwright_page"]
+        #await page.screenshot(path="%example.png", full_page=True)
         await page.close()
-        #smartstore_regex = re.compile("smartstore.naver.com")
 
         if response.css('[class="_23RpOU6xpc _2KRGoy-HE2"]'):
             product_src = response.css('[class="_23RpOU6xpc _2KRGoy-HE2"] > img ::attr(src)').get()
         elif response.css('[class="_23RpOU6xpc"]'):
             product_src = response.css('[class="_23RpOU6xpc"] > img ::attr(src)').get()
-
-        #if smartstore_regex.search(response.request.url):
 
         product_data = EcsItem()
         product_data['detected_time'] = datetime.today().strftime("%Y-%m-%d %H:%M:%S")
@@ -69,7 +68,6 @@ class SmartstoreSpider(scrapy.Spider):
         product_data['product_title'] = response.css('[class="_3oDjSvLwq9 _copyable"] ::Text').get()
         product_data['product_price'] = response.css('[class="_1LY7DqCnwR"] ::Text').get()
         product_data['product_seller'] = response.css('[class="_1gAVrxQEks"] ::Text').get()
-
         yield product_data
 
     async def errback(self, failure):
