@@ -2,17 +2,12 @@ import argparse
 from scrapy import spiderloader
 from scrapy.utils.project import get_project_settings
 from scrapy.crawler import CrawlerProcess
-from scrapy.utils.log import configure_logging
-from twisted.internet import reactor, defer
-from scrapy.crawler import CrawlerRunner
+
 
 parser = argparse.ArgumentParser(description='ECS - Comment', formatter_class=argparse.RawTextHelpFormatter, conflict_handler='resolve')
 
 
 def get_arguments():
-    parser.add_argument('-m', '--mode', type=str, choices=['p', 's'], required=True, metavar=("'p' or 's'"),
-                        help='Processing Mode (Parallel or Sequentially)')
-
     parser.add_argument('-t', '--target', type=str, required=True, nargs='+', metavar=("'Market_1' 'Market_2'"),
                         help='Set Marketplaces')
 
@@ -40,16 +35,12 @@ def get_arguments():
     #parser.add_argument('-s', '--schedule', type=str, choices=['y', 'n'], default='n', metavar=("'y' or 'n'"), help='Set Schedule')
 
     _args = parser.parse_args()
-
     return _args
 
 
 def ecs_main():
     args = get_arguments()
-
-    if args.mode == 'p':
-        parallel_mode(args.target, args.keyword)
-    sequentially_mode(args.target, args.keyword)
+    parallel_mode(args.target, args.keyword)
 
 
 def parallel_mode(p_targets, p_keyword):
@@ -64,25 +55,6 @@ def parallel_mode(p_targets, p_keyword):
         process.crawl(target)
 
     process.start()
-
-
-def sequentially_mode(s_targets, s_keyword):
-    settings = get_project_settings()
-    configure_logging(settings)
-    runner = CrawlerRunner(settings)
-
-    print(f"Detection Targets : {s_targets}")
-    print(f"Keywords : {s_keyword}")
-
-    @defer.inlineCallbacks
-    def crawl():
-        for target in s_targets:
-            print(f"Spider '{target}' launched!")
-            yield runner.crawl(target)
-        reactor.stop()
-
-    crawl()
-    reactor.run()
 
 
 if __name__ == '__main__':
