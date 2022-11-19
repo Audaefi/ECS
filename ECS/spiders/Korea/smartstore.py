@@ -27,10 +27,9 @@ class SmartstoreSpider(scrapy.Spider):
                     "playwright_page_methods": [
                         PageMethod("evaluate", "window.scrollBy(0, document.body.scrollHeight)"),
                         PageMethod("wait_for_timeout", 2000),
-
                     ],
                     "errback": self.errback,
-                    "pd_keyword": keyword,
+                    "search_keyword": keyword,
                 })
 
     async def parse_page(self, response):
@@ -38,7 +37,7 @@ class SmartstoreSpider(scrapy.Spider):
         # await page.screenshot(path="example.png", full_page=True)
         await page.close()
 
-        pd_keyword = response.meta["pd_keyword"]
+        search_keyword = response.meta["search_keyword"]
         products_selector = response.css('[data-testid="SEARCH_PRODUCT"]')
 
         for product in products_selector:
@@ -47,7 +46,7 @@ class SmartstoreSpider(scrapy.Spider):
                                  callback=self.parse_product,
                                  meta={"playwright": True, "playwright_include_page": True, "playwright_page_methods": [
                                      PageMethod("wait_for_timeout", 2000)
-                                 ], "product_url": product_url, "pd_keyword": pd_keyword})
+                                 ], "product_href": product_url, "search_keyword": search_keyword})
 
     async def parse_product(self, response):
         page = response.meta["playwright_page"]
@@ -62,8 +61,8 @@ class SmartstoreSpider(scrapy.Spider):
         product_data = EcsItem()
         product_data['detected_time'] = datetime.today().strftime("%Y-%m-%d %H:%M:%S")
         product_data['marketplace'] = self.name
-        product_data['search_keyword'] = response.meta["pd_keyword"]
-        product_data['product_href'] = response.meta["product_url"]
+        product_data['search_keyword'] = response.meta["search_keyword"]
+        product_data['product_href'] = response.meta["product_href"]
         product_data['product_src'] = product_src
         product_data['product_title'] = response.css('[class="_3oDjSvLwq9 _copyable"] ::Text').get()
         product_data['product_price'] = response.css('[class="_1LY7DqCnwR"] ::Text').get()
