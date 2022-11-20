@@ -3,23 +3,12 @@ import scrapy
 from datetime import datetime
 from scrapy_playwright.page import PageMethod
 
+from ECS.items import EcsItem
+from ECS.main import get_arguments
+
 
 class A11stSpider(scrapy.Spider):
     name = '11st'
-
-    HEADERS = {
-        "User-Agent": 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.83 Safari/537.36',
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "Accept-Encoding": "gzip, deflate",
-        "Connection": "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
-        "Sec-Fetch-Dest": "document",
-        "Sec-Fetch-Mode": "navigate",
-        "Sec-Fetch-Site": "none",
-        "Sec-Fetch-User": "?1",
-        "Cache-Control": "max-age=0",
-    }
 
     custom_settings = {
         'FEEDS': {'data/%(name)s_%(time)s.csv': {'format': 'csv', }},
@@ -27,55 +16,55 @@ class A11stSpider(scrapy.Spider):
     }
 
     def start_requests(self):
-        keyword_list = list(map(str, input('Search Keywords : ').split(',')))
-        pages = int(input("Max Crawl Pages : "))
+        args = get_arguments()
+        req_pages = {marketplace: page for marketplace, page in zip(args.target, args.page)}
 
-        for keyword in keyword_list:
-            for page in range(1, pages + 1):
+        for keyword in args.keyword:
+            for page in range(1, req_pages[self.name] + 1):
                 search_url = f'https://search.11st.co.kr/Search.tmall?kwd={keyword}#pageNum%%{page}%%page%%10$$viewType%%I%%gallery%%13$$sortCd%%SPS%%11%EB%B2%88%EA%B0%80%20%EC%9D%B8%EA%B8%B0%EC%88%9C%%9'
-                yield scrapy.Request(search_url, callback=self.parse_page, meta=dict(
-                    playwright=True,
-                    playwright_include_page=True,
-                    playwright_page_methods=[
+                yield scrapy.Request(search_url, callback=self.parse_page, meta={
+                    "playwright": True,
+                    "playwright_include_page": True,
+                    "playwright_page_methods": [
                         PageMethod("evaluate", "window.scrollBy(0, document.body.scrollHeight)"),
                         PageMethod("evaluate", "window.scrollBy(document.body.scrollHeight, 0)"),
                         PageMethod("wait_for_timeout", 2000),
-
                     ],
-                    errback=self.errback,
-                ))
+                    "errback": self.errback,
+                    "search_keyword": keyword,
+                })
 
-    def parse_page(self, response):
+    async def parse_page(self, response):
+        page = response.meta["playwright_page"]
+        # await page.screenshot(path="example.png", full_page=True)
+        await page.close()
+
+        search_keyword = response.meta["search_keyword"]
         products_selector = response.css('[data-log-actionid-label="product"]')
 
         for product in products_selector:
             product_url = product.css('::attr(href)').get()
             yield scrapy.Request(product_url,
                                  callback=self.parse_product,
-                                 meta={"playwright": False,
-                                       "playwright_page_methods": [
-                                           PageMethod("wait_for_timeout", 2000),
-                                       ],
-                                       "product_url": product_url
-                                       })
+                                 meta={"playwright": True, "playwright_include_page": True, "playwright_page_methods": [
+                                     PageMethod("wait_for_timeout", 2000)
+                                 ], "product_href": product_url, "search_keyword": search_keyword})
 
-    def parse_product(self, response):
-        page_url = response.meta["product_url"]
-        product_src = response.css('div.img_full > img ::attr(src)').get()
-        product_title = response.xpath('.//title/text()').get()
-        product_price = response.css('span.value ::Text').get()
-        product_seller = response.css('h1.c_product_store_title > a ::Text').get().strip()
+    async def parse_product(self, response):
+        page = response.meta["playwright_page"]
+        #await page.screenshot(path="%example.png", full_page=True)
+        await page.close()
 
-        yield {
-            "marketplace": self.name,
-            "detected_time": datetime.today().strftime("%Y-%m-%d %H:%M:%S"),
-            "product_href": page_url,
-
-            "product_src": product_src,
-            'product_title': product_title.strip(),
-            'product_price': product_price,
-            'product_seller': product_seller
-        }
+        product_data = EcsItem()
+        product_data['detected_time'] = datetime.today().strftime("%Y-%m-%d %H:%M:%S")
+        product_data['marketplace'] = self.name
+        product_data['search_keyword'] = response.meta["search_keyword"]
+        product_data['product_href'] = response.meta["product_href"]
+        product_data['product_src'] = response.css('[class="img_full"] > img ::attr(src)').get()
+        product_data['product_title'] = response.css('[class="title"] ::Text').get().strip()
+        product_data['product_price'] = response.css('strong > span.value ::Text').get().replace("원", "")
+        product_data['product_seller'] = response.css('[class="c_product_store_title"] > a ::Text').get().strip()
+        yield product_data
 
     async def errback(self, failure):
         page = failure.request.meta["playwright_page"]

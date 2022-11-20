@@ -19,7 +19,7 @@ class SmartstoreSpider(scrapy.Spider):
         req_page = {marketplace: page for marketplace, page in zip(args.target, args.page)}
 
         for keyword in args.keyword:
-            for page in range(1, req_page['smartstore'] + 1):
+            for page in range(1, req_page[self.name] + 1):
                 search_url = f"https://search.shopping.naver.com/search/all?exrental=true&exused=true&frm=NVSHCHK&npayType=2&origQuery={keyword}&pagingIndex={page}&pagingSize=40&productSet=checkout&query={keyword}&sort=date&timestamp=&viewType=list"
                 yield scrapy.Request(search_url, callback=self.parse_page, meta={
                     "playwright": True,
@@ -53,17 +53,19 @@ class SmartstoreSpider(scrapy.Spider):
         #await page.screenshot(path="%example.png", full_page=True)
         await page.close()
 
+        '''
         if response.css('[class="_23RpOU6xpc _2KRGoy-HE2"]'):
             product_src = response.css('[class="_23RpOU6xpc _2KRGoy-HE2"] > img ::attr(src)').get()
         elif response.css('[class="_23RpOU6xpc"]'):
             product_src = response.css('[class="_23RpOU6xpc"] > img ::attr(src)').get()
+        '''
 
         product_data = EcsItem()
         product_data['detected_time'] = datetime.today().strftime("%Y-%m-%d %H:%M:%S")
         product_data['marketplace'] = self.name
         product_data['search_keyword'] = response.meta["search_keyword"]
         product_data['product_href'] = response.meta["product_href"]
-        product_data['product_src'] = product_src
+        product_data['product_src'] = response.css('[class*="_23RpOU6xpc"] > img ::attr(src)').get()
         product_data['product_title'] = response.css('[class="_3oDjSvLwq9 _copyable"] ::Text').get()
         product_data['product_price'] = response.css('[class="_1LY7DqCnwR"] ::Text').get()
         product_data['product_seller'] = response.css('[class="_1gAVrxQEks"] ::Text').get()
