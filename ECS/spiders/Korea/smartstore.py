@@ -46,7 +46,7 @@ class SmartstoreSpider(scrapy.Spider):
                                  callback=self.parse_product,
                                  meta={"playwright": True, "playwright_include_page": True, "playwright_page_methods": [
                                      PageMethod("wait_for_timeout", 2000)
-                                 ], "product_href": product_url, "search_keyword": search_keyword})
+                                 ], "errback": self.errback, "product_href": product_url, "search_keyword": search_keyword})
 
     async def parse_product(self, response):
         page = response.meta["playwright_page"]
