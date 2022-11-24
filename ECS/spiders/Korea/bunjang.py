@@ -13,7 +13,7 @@ class BunjangSpider(scrapy.Spider):
     name = 'bunjang'
 
     custom_settings = {
-        #'FEEDS': {'data/%(name)s_%(time)s.csv': {'format': 'csv', }},
+        'FEEDS': {'data/%(name)s_%(time)s.csv': {'format': 'csv', }},
         'PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT': '100000'
     }
 
