@@ -60,6 +60,6 @@ Tag : `Python` `Scrapy` `Playwright` `EC2` `S3`
 ```
 python3 main.py -t ssg -p 1 -k macbook
 python3 main.py --target ssg --page 1 --keyword macbook
-python3 main.py --target ssg gmarket auction --page 1 --keyword macbook
+python3 main.py --target ssg gmarket auction --page 1 4 2 --keyword macbook
 ```
 
