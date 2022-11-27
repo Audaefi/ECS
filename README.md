@@ -11,7 +11,7 @@ Tag : `Python` `Scrapy` `Playwright` `EC2` `S3`
 ## Description
 Python Scrapy spider that scrapes product data from various Marketplaces.
 
-These scrapers extract the following fields from product pages:
+These spiders extract the following fields from product pages:
 
 - Product URL
 - Image URL
