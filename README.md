@@ -1,12 +1,14 @@
 # ECS (E-Commerce Scraper)
 
 ## Project Details
-`Python` `Scrapy` `Playwright` `EC2` `S3`
+
 Project Name: ECS
 
 Project period: 2022-09 ~ Present (continuous development & operation)
 
 Project Description: Scrapy, Playwright-based Domestic/Overseas Marketplace Scraper
+
+Tag : `Python` `Scrapy` `Playwright` `EC2` `S3`
 
 
 ## Command-line
