@@ -7,11 +7,9 @@
 
 **프로젝트 설명** : Marketplace Research
 
-**사용 기술** : 
+**사용 기술** : `Python` `Scrapy` `Playwright` `EC2` `S3`
 
-- 데이터 수집 & 저장 : `Python` `Scrapy` `Playwright` `EC2` `S3`
-- 데이터 처리 & 분석 : `Redshift` `EMR`
-- 데이터 시각화 : `Tableau`
+** Command - line 정리
 
 - 수집 대상 Marketplace 지정 (필수 명령어 / 복수 지정 가능)
     
