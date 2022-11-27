@@ -93,7 +93,7 @@ python3 main.py --target aliexpress alibaba --page 2 2 --keyword pokemon --exclu
 
 You can change the extract delay in your scraper by updating the `AUTOTHROTTLE_START_DELAY` and `AUTOTHROTTLE_MAX_DELAY` values in your `settings.py` file.
 ```
-AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_ENABLED = True # DONT CHANGE THIS
 
 AUTOTHROTTLE_START_DELAY = 3 # Recommended for 3 to 5 or more
 AUTOTHROTTLE_MAX_DELAY = 6 # 'AUTOTHROTTLE_START_DELAY' + more than 3 to 6
