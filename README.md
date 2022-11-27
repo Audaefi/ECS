@@ -56,10 +56,17 @@ Tag : `Python` `Scrapy` `Playwright` `EC2` `S3`
   -u | —unth `Unauthorised Seller_1` `Unauthorised Seller_2` ..
 ```
 
-### Example
+### Example (Basic)
 ```
 python3 main.py -t ssg -p 1 -k macbook
 python3 main.py --target ssg --page 1 --keyword macbook
 python3 main.py --target ssg gmarket auction --page 1 4 2 --keyword macbook
+```
+
+### Example (Advanced)
+```
+python3 main.py --target ssg gmarket auction --page 1 4 2 --keyword macbook --include air
+python3 main.py -k iphone -t amazon gmarket aliexpress -p 1 2 2 -e pro -p y
+python3 main.py --target aliexpress alibaba --page 2 2 --keyword pokemon --exclude hoodie -proxy y -auth Shop0014392 
 ```
 
