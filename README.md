@@ -9,7 +9,7 @@
 
 **사용 기술** : `Python` `Scrapy` `Playwright` `EC2` `S3`
 
-** Command - line 정리
+** Command - line 정리 **
 
 - 수집 대상 Marketplace 지정 (필수 명령어 / 복수 지정 가능)
     
