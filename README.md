@@ -16,7 +16,7 @@ Python Scrapy spider that scrapes product data from various marketplaces.
 These scrapers extract the following fields from product pages:
 
 - Product URL
-- Image Url
+- Image URL
 - Product Name
 - Price
 - Seller / Manufacturer Name 
