@@ -5,7 +5,7 @@
 
 **프로젝트 기간** : 2022.09 ~ Present (지속 개발 & 운용 중)
 
-**프로젝트 설명** : Marketplace Research
+**프로젝트 설명** : Scrapy, Playwright 기반 국내/해외 Marketplace Scraper
 
 **사용 기술** : `Python` `Scrapy` `Playwright` `EC2` `S3`
 
