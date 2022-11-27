@@ -9,7 +9,9 @@
 
 **사용 기술** : `Python` `Scrapy` `Playwright` `EC2` `S3`
 
-** Command - line 정리 **
+**Command - line 정리**
+
+<img width="1217" alt="Screenshot 2022-11-27 at 9 03 30 PM" src="https://user-images.githubusercontent.com/24248797/204138676-63635c3a-48cc-4b71-89b1-8bf116ee80e6.png">
 
 - 수집 대상 Marketplace 지정 (필수 명령어 / 복수 지정 가능)
     
