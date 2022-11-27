@@ -1,15 +1,15 @@
 # ECS (E-Commerce Scraper)
 
 ## Project Details
-**프로젝트명** : ECS
+`Python` `Scrapy` `Playwright` `EC2` `S3`
+Project Name: ECS
 
-**프로젝트 기간** : 2022.09 ~ Present (지속 개발 & 운용 중)
+Project period: 2022-09 ~ Present (continuous development & operation)
 
-**프로젝트 설명** : Scrapy, Playwright 기반 국내/해외 Marketplace Scraper
+Project Description: Scrapy, Playwright-based Domestic/Overseas Marketplace Scraper
 
-**사용 기술** : `Python` `Scrapy` `Playwright` `EC2` `S3`
 
-**Command - line 정리**
+## Command-line
 
 <img width="1217" alt="Screenshot 2022-11-27 at 9 03 30 PM" src="https://user-images.githubusercontent.com/24248797/204138676-63635c3a-48cc-4b71-89b1-8bf116ee80e6.png">
 
