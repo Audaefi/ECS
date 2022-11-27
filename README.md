@@ -19,7 +19,7 @@ These scrapers extract the following fields from product pages:
 - Image URL
 - Product Name
 - Price
-- Seller / Manufacturer Name 
+- Seller / Manufacturer Name
 Etc.
 
 
