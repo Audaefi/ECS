@@ -27,7 +27,6 @@ pip install -r requirements.txt
 pip install scrapy scrapeops-scrapy
 playwirght install
 playwright install-deps
-
 ```
 
 
