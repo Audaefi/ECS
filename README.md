@@ -18,30 +18,37 @@ Tag : `Python` `Scrapy` `Playwright` `EC2` `S3`
 - Specify a Marketplace to Collect (essential command / multiple arguments are possible)
 
   -t | —target `Marketplace_1` `Marketplace_2` ..
+  
 
-- Specify the number of page collections for the specified Marketplace (essential command / multiple arguments are possible)
+- Specify the number of page collections for the specified Marketplace (essential command)
 
   -p | —page `Marketplace_1_pages` `Marketplace_2_pages` ..
+  
 
 - Specify a search keyword (essential command / multiple arguments are possible)
 
   -k | —keyword `Keyword_1` `Keyword_2` ..
+  
 
 - Enable proxy (default = 'n')
 
   -x | —proxy `'y' or 'n'`
 
+
 - Only data including the keyword in the product name can be collected (multiple arguments are possible)
 
   -i | —include `Include Keyword_1` `Include Keyword_2` ..
+
 
 - Drop all data including the keyword in the product name (multiple arguments are possible)
 
   -e | —exclude `Exclude Keyword_1` `Exclude Keyword_2` ..
 
+
 - The data of all products sold by the 'seller' can be dropped (multiple arguments are possible)
 
   -a | —auth `Authorised Seller_1` `Authorised Seller_2` ..
+
 
 - Collect only data on products sold by the 'seller' (multiple arguments are possible)
 
