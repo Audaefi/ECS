@@ -4,7 +4,7 @@
 
 Project Name: ECS
 
-Project Period: 2022-09 ~ Present (continuing development & operation)
+Project Period: 2022-09 ~ Present (Continuing development & operation)
 
 Project Description: Scrapy, Playwright-based Domestic & Overseas Marketplace Scraper
 
@@ -15,17 +15,17 @@ Tag : `Python` `Scrapy` `Playwright` `EC2` `S3`
 
 <img width="1217" alt="Screenshot 2022-11-27 at 9 03 30 PM" src="https://user-images.githubusercontent.com/24248797/204138676-63635c3a-48cc-4b71-89b1-8bf116ee80e6.png">
 
-- Specify a Marketplace to Collect (essential / multiple arguments are possible)
+- Specify a Marketplace to collect (ESSENTIAL / multiple arguments are possible)
 
   -t | —target `Marketplace_1` `Marketplace_2` ..
   
 
-- Specify the number of page collections for the specified Marketplace (essential)
+- Specify the number of page collections for the specified Marketplace (ESSENTIAL)
 
   -p | —page `Marketplace_1_pages` `Marketplace_2_pages` ..
   
 
-- Specify a search keyword (essential / multiple arguments are possible)
+- Specify a search keyword (ESSENTIAL / multiple arguments are possible)
 
   -k | —keyword `Keyword_1` `Keyword_2` ..
   
