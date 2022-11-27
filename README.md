@@ -2,8 +2,6 @@
 
 ## Project Details
 
-Project Name: ECS
-
 Project Period: 2022-09 ~ Present (Continuing development & operation)
 
 Project Description: Scrapy, Playwright-based Domestic & Overseas Marketplace Scraper
