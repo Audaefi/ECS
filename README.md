@@ -98,5 +98,5 @@ You can change the extract delay in your scraper by updating the `AUTOTHROTTLE_S
 AUTOTHROTTLE_ENABLED = True
 
 AUTOTHROTTLE_START_DELAY = 3 # Recommended for 3 to 5 or more
-AUTOTHROTTLE_MAX_DELAY = 6 # 'AUTOTHROTTLE_START_DELAY' + more than 3 to 4 seconds
+AUTOTHROTTLE_MAX_DELAY = 6 # 'AUTOTHROTTLE_START_DELAY' + more than 3 to 4 or more
 ```
