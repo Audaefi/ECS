@@ -1,13 +1,11 @@
 # ECS (E-Commerce Scraper)
 
 ## Project Details
-**프로젝트명** : ECS - Data Pipeline
+**프로젝트명** : ECS
 
-**프로젝트 분야** : Cloud / Data Engineering
+**프로젝트 기간** : 2022.09 ~ Present (지속 개발 & 운용 중)
 
-**프로젝트 기간** : 2022.02 ~ 2022.03 (초기 버전, Selenium) / 2022.09 ~ Present (지속 개발 & 운용 중)
-
-**프로젝트 설명** : Marketplace Research를 위한, AWS 기반 데이터 파이프라인 [수집-저장-처리-분석-시각화] 구축
+**프로젝트 설명** : Marketplace Research
 
 **사용 기술** : 
 
@@ -15,26 +13,34 @@
 - 데이터 처리 & 분석 : `Redshift` `EMR`
 - 데이터 시각화 : `Tableau`
 
-## Architecture
-<img width="1098" alt="Screenshot 2022-11-17 at 8 20 15 PM" src="https://user-images.githubusercontent.com/24248797/202434659-62384ae2-5291-4c14-b1ce-3469a1d93139.png">
-
-## Operation Process
-#### 1. 데이터 수집 & 저장
-- Python과 Scrapy, Playwright 기반 강력한 Market Scraper
-  - 총 30개의 Market Coverage 지원
-  - Proxy를 통한 수집 지원
-  - n개의 Market을 동시 수집 가능한, Parallel-Processing Mode 지원
-  - Market 별 자동 로그인 기능 (각 마켓 별 계정 생성 및 개발 중 / 22.11 ~ )
-  - Include / Exclude Keyword 지정 기능
-  - 수집 데이터를 지정한 S3 Bucket으로 자동 업로드 (Crawler를 이용, S3 Bucket -> Glue Catalog로 자동 업로드)
-
-#### 2. 데이터 처리 & 분석
-- EMR(Spark, Hadoop, Hive, etc.)을 통한 데이터 전처리 및 분석
-    - a. 데이터 분석&시각화를 위한 데이터 전처리 과정
-        - 결측값 및 Irrelevant 데이터 제거
-    - b. Python 또는 SQL, Scala를 이용한 데이터 분석 과정
-        - “어떤 Market에서 어떤 Product가 가장 많이 나오는가?”
-        - “어떤 Seller가 가장 많은 유통 비중을 차지하는가?”
-
-#### 3. 데이터 시각화
-- 데이터 기반 의사 결정, 신고 전략 수립을 위한 BI 대시보드(Tableau) 연동
+- 수집 대상 Marketplace 지정 (필수 명령어 / 복수 지정 가능)
+    
+    -t | —target `Marketplace_1` `Marketplace_2` ..
+    
+- 지정한 Marketplace들의 수집 페이지량 지정 (필수 명령어 / 복수 지정 가능)
+    
+    -p | —page `Marketplace_1_pages` `Marketplace_2_pages` ..
+    
+- 검색 키워드 지정 (필수 명령어 / 복수 지정 가능)
+    
+    -k | —keyword `Keyword_1` `Keyword_2` ..
+    
+- 프록시 사용 설정 (default = ‘n’)
+    
+    -x | —proxy `'y' or 'n'` 
+    
+- 상품명에 해당 키워드를 포함한 데이터만 수집 (복수 지정 가능)
+    
+    -i | —include `Include Keyword_1` `Include Keyword_2`  ..
+    
+- 상품명에 해당 키워드를 포함한 데이터는 모두 Drop (복수 지정 가능)
+    
+    -e | —exclude `Exclude Keyword_1` `Exclude Keyword_2` ..
+    
+- 해당 Seller가 판매하는 상품의 데이터는 모두 Drop (복수 지정 가능)
+    
+    -a | —auth `Authorised Seller_1` `Authorised Seller_2` ..
+    
+- 해당 Seller가 판매하는 상품의 데이터만 수집 (복수 지정 가능)
+    
+    -u | —unth `Unauthorised Seller_1` `Unauthorised Seller_2` ..
