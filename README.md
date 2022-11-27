@@ -24,8 +24,8 @@ These scrapers extract the following fields from product pages:
 ## Install
 ```
 pip install -r requirements.txt
-# pip install scrapy scrapeops-scrapy
-# pip install scrapeops-scrapy-proxy-sdk
+pip install scrapy scrapeops-scrapy
+pip install scrapeops-scrapy-proxy-sdk
 playwirght install
 playwright install-deps
 ```
