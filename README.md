@@ -91,7 +91,7 @@ python3 main.py --target aliexpress alibaba --page 2 2 --keyword pokemon --exclu
 ```
 
 ## Changing the Crawl Speed (NOT RECOMMENDED)
-**If you set these values too fast, your IP may be blocked depending on the marketplace's access policy.**
+**If you set these values too fast, your IP may be blocked depending on the Marketplace's access policy.**
 
 You can change the extract delay in your scraper by updating the `AUTOTHROTTLE_START_DELAY` and `AUTOTHROTTLE_MAX_DELAY` values in your `settings.py` file.
 ```
