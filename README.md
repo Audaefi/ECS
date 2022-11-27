@@ -90,3 +90,11 @@ python3 main.py -k iphone -t amazon gmarket aliexpress -p 1 2 2 -e pro -p y
 python3 main.py --target aliexpress alibaba --page 2 2 --keyword pokemon --exclude hoodie -proxy y -auth Shop0014392 
 ```
 
+## Speeding Up The Crawl (NOT RECOMMENDED)
+You can change the extract delay in your scraper by updating the AUTOTHROTTLE_START_DELAY and AUTOTHROTTLE_MAX_DELAY values in your settings.py file.
+```
+AUTOTHROTTLE_ENABLED = True
+
+AUTOTHROTTLE_START_DELAY = 3 # 
+AUTOTHROTTLE_MAX_DELAY = 6
+```
