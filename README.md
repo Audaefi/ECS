@@ -15,17 +15,17 @@ Tag : `Python` `Scrapy` `Playwright` `EC2` `S3`
 
 <img width="1217" alt="Screenshot 2022-11-27 at 9 03 30 PM" src="https://user-images.githubusercontent.com/24248797/204138676-63635c3a-48cc-4b71-89b1-8bf116ee80e6.png">
 
-- Specify a Marketplace to Collect (essential command / multiple arguments are possible)
+- Specify a Marketplace to Collect (essential / multiple arguments are possible)
 
   -t | —target `Marketplace_1` `Marketplace_2` ..
   
 
-- Specify the number of page collections for the specified Marketplace (essential command)
+- Specify the number of page collections for the specified Marketplace (essential)
 
   -p | —page `Marketplace_1_pages` `Marketplace_2_pages` ..
   
 
-- Specify a search keyword (essential command / multiple arguments are possible)
+- Specify a search keyword (essential / multiple arguments are possible)
 
   -k | —keyword `Keyword_1` `Keyword_2` ..
   
