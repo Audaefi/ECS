@@ -20,7 +20,6 @@ These scrapers extract the following fields from product pages:
 - Product Name
 - Price
 - Seller / Manufacturer Name
-Etc.
 
 
 ## Usage
