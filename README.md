@@ -4,9 +4,9 @@
 
 Project Name: ECS
 
-Project Period: 2022-09 ~ Present (continuous development & operation)
+Project Period: 2022-09 ~ Present (continuing development & operation)
 
-Project Description: Scrapy, Playwright-based Domestic/Overseas Marketplace Scraper
+Project Description: Scrapy, Playwright-based Domestic & Overseas Marketplace Scraper
 
 Tag : `Python` `Scrapy` `Playwright` `EC2` `S3`
 
