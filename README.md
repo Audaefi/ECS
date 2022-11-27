@@ -21,6 +21,15 @@ These scrapers extract the following fields from product pages:
 - Price
 - Seller / Manufacturer Name
 
+## Install
+```
+pip install -r requirements.txt
+pip install scrapy scrapeops-scrapy
+playwirght install
+playwright install-deps
+
+```
+
 
 ## Usage
 
