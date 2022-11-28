@@ -65,8 +65,8 @@ class SsgSpider(scrapy.Spider):
         product_data['marketplace'] = self.name
         product_data['search_keyword'] = response.meta["search_keyword"]
         product_data['product_href'] = response.meta["product_href"]
-        product_data['product_src'] = response.css('[class="cdtl_col_lft"] > div > span > img ::attr(src)').get()
-        product_data['product_title'] = response.css('[class="cdtl_info_tit"] ::Text').get()
+        product_data['product_src'] = response.css('[id="mainImg"] ::attr(src)').get()
+        product_data['product_title'] = response.css('[class="cdtl_info_tit"] ::Text').get().strip()
         product_data['product_price'] = response.css('[class="ssg_price"] ::Text').get()
         product_data['product_seller'] = product_seller
         yield product_data
