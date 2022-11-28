@@ -1,40 +1,100 @@
 # ECS (E-Commerce Scraper)
 
 ## Project Details
-**프로젝트명** : ECS - Data Pipeline
 
-**프로젝트 분야** : Cloud / Data Engineering
+Project Period: 2022-09 ~ Present (Continuing Development)
 
-**프로젝트 기간** : 2022.02 ~ 2022.03 (초기 버전, Selenium) / 2022.09 ~ Present (지속 개발 & 운용 중)
+Project Description: Scrapy, Playwright-based Domestic & Overseas Marketplace Scraper
 
-**프로젝트 설명** : Marketplace Research를 위한, AWS 기반 데이터 파이프라인 [수집-저장-처리-분석-시각화] 구축
+Tag : `Python` `Scrapy` `Playwright` `EC2` `S3`
 
-**사용 기술** : 
+## Description
+Python Scrapy spider that scrapes product data from various Marketplaces.
 
-- 데이터 수집 & 저장 : `Python` `Scrapy` `Playwright` `EC2` `S3`
-- 데이터 처리 & 분석 : `Redshift` `EMR`
-- 데이터 시각화 : `Tableau`
+These spiders extract the following fields from product pages:
 
-## Architecture
-<img width="1098" alt="Screenshot 2022-11-17 at 8 20 15 PM" src="https://user-images.githubusercontent.com/24248797/202434659-62384ae2-5291-4c14-b1ce-3469a1d93139.png">
+- Product URL
+- Image(thumbnail) URL 
+- Product Name
+- Price
+- Seller / Manufacturer Name
 
-## Operation Process
-#### 1. 데이터 수집 & 저장
-- Python과 Scrapy, Playwright 기반 강력한 Market Scraper
-  - 총 30개의 Market Coverage 지원
-  - Proxy를 통한 수집 지원
-  - n개의 Market을 동시 수집 가능한, Parallel-Processing Mode 지원
-  - Market 별 자동 로그인 기능 (각 마켓 별 계정 생성 및 개발 중 / 22.11 ~ )
-  - Include / Exclude Keyword 지정 기능
-  - 수집 데이터를 지정한 S3 Bucket으로 자동 업로드 (Crawler를 이용, S3 Bucket -> Glue Catalog로 자동 업로드)
+## Install
+```
+pip install -r requirements.txt
+pip install scrapy scrapeops-scrapy
+pip install scrapeops-scrapy-proxy-sdk
+playwirght install
+playwright install-deps
+```
 
-#### 2. 데이터 처리 & 분석
-- EMR(Spark, Hadoop, Hive, etc.)을 통한 데이터 전처리 및 분석
-    - a. 데이터 분석&시각화를 위한 데이터 전처리 과정
-        - 결측값 및 Irrelevant 데이터 제거
-    - b. Python 또는 SQL, Scala를 이용한 데이터 분석 과정
-        - “어떤 Market에서 어떤 Product가 가장 많이 나오는가?”
-        - “어떤 Seller가 가장 많은 유통 비중을 차지하는가?”
 
-#### 3. 데이터 시각화
-- 데이터 기반 의사 결정, 신고 전략 수립을 위한 BI 대시보드(Tableau) 연동
+## Usage
+
+<img width="1217" alt="Screenshot 2022-11-27 at 9 03 30 PM" src="https://user-images.githubusercontent.com/24248797/204138676-63635c3a-48cc-4b71-89b1-8bf116ee80e6.png">
+
+```
+- Specify a Marketplace to collect (ESSENTIAL / multiple arguments are possible)
+
+  -t | —target `Marketplace_1` `Marketplace_2` ..
+  
+
+- Specify the number of page collections for the specified Marketplace (ESSENTIAL)
+
+  -p | —page `Marketplace_1_pages` `Marketplace_2_pages` ..
+  
+
+- Specify a search keyword (ESSENTIAL / multiple arguments are possible)
+
+  -k | —keyword `Keyword_1` `Keyword_2` ..
+  
+
+- Enable proxy (default = 'n')
+
+  -x | —proxy `'y' or 'n'`
+
+
+- Only data including the keyword in the product name can be collected (multiple arguments are possible)
+
+  -i | —include `Include Keyword_1` `Include Keyword_2` ..
+
+
+- Drop all data including the keyword in the product name (multiple arguments are possible)
+
+  -e | —exclude `Exclude Keyword_1` `Exclude Keyword_2` ..
+
+
+- The data of all products sold by the 'seller' can be dropped (multiple arguments are possible)
+
+  -a | —auth `Authorised Seller_1` `Authorised Seller_2` ..
+
+
+- Collect only data on products sold by the 'seller' (multiple arguments are possible)
+
+  -u | —unth `Unauthorised Seller_1` `Unauthorised Seller_2` ..
+```
+
+### Example (Basic)
+```
+python3 main.py -t ssg -p 1 -k macbook
+python3 main.py --target ssg --page 1 --keyword macbook
+python3 main.py --target ssg gmarket auction --page 1 4 2 --keyword macbook
+```
+
+### Example (Advanced)
+```
+python3 main.py --target ssg gmarket auction --page 1 4 2 --keyword macbook --include air
+python3 main.py -k iphone -t amazon gmarket aliexpress -p 1 2 2 -e pro -p y
+python3 main.py --target aliexpress alibaba --page 2 2 --keyword pokemon --exclude hoodie --proxy y --auth Shop0014392 
+```
+
+## Changing the Crawl Speed (NOT RECOMMENDED)
+**If you set these values too fast, your IP may be blocked depending on the Marketplace's Access Policy.**
+
+You can change the extract delay in your scraper by updating the `AUTOTHROTTLE_START_DELAY` and `AUTOTHROTTLE_MAX_DELAY` values in your `settings.py` file.
+```
+AUTOTHROTTLE_ENABLED = True # DONT CHANGE THIS
+
+AUTOTHROTTLE_START_DELAY = 3 # Recommended for 3 to 5 or more
+AUTOTHROTTLE_MAX_DELAY = 6 # 'AUTOTHROTTLE_START_DELAY' + more than 3 to 6
+```
