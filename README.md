@@ -85,7 +85,7 @@ python3 main.py --target ssg gmarket auction --page 1 4 2 --keyword macbook
 ```
 python3 main.py --target ssg gmarket auction --page 1 4 2 --keyword macbook --include air
 python3 main.py -k iphone -t amazon gmarket aliexpress -p 1 2 2 -e pro -p y
-python3 main.py --target aliexpress alibaba --page 2 2 --keyword pokemon --exclude hoodie -proxy y -auth Shop0014392 
+python3 main.py --target aliexpress alibaba --page 2 2 --keyword pokemon --exclude hoodie --proxy y --auth Shop0014392 
 ```
 
 ## Changing the Crawl Speed (NOT RECOMMENDED)
