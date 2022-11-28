@@ -2,7 +2,7 @@
 
 ## Project Details
 
-Project Period: 2022-09 ~ Present (Continuing Development & Operation)
+Project Period: 2022-09 ~ Present (Continuing Development)
 
 Project Description: Scrapy, Playwright-based Domestic & Overseas Marketplace Scraper
 
