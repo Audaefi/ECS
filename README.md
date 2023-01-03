@@ -2,11 +2,13 @@
 
 ## Project Details
 
-Project Period: 2022-09 ~ Present (Continuing Development)
+**Project Period** : 2022-09 ~ Present (Continuing Development)
 
-Project Summary : Scrapy, Playwright-based Domestic & Overseas Marketplace Scraper
+**Project Summary** : Scrapy, Playwright-based Domestic & Overseas Marketplace Scraper
 
-Tag : `Python` `Scrapy` `Playwright` `EC2` `S3`
+**Doc** : https://kjo.oopy.io/84e79e57-6231-4cca-a0a6-c9b521e55547
+
+**Tag** : `Python` `Scrapy` `Playwright` `EC2` `S3`
 
 ## Description
 Python Scrapy spider that scrapes product data from various Marketplaces.
