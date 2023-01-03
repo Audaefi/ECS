@@ -4,7 +4,7 @@
 
 Project Period: 2022-09 ~ Present (Continuing Development)
 
-Project Description: Scrapy, Playwright-based Domestic & Overseas Marketplace Scraper
+Project Summary : Scrapy, Playwright-based Domestic & Overseas Marketplace Scraper
 
 Tag : `Python` `Scrapy` `Playwright` `EC2` `S3`
 
